@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>5-Minute Diagnostic</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #ffffff;
+      color: #333;
+      line-height: 1.5;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .header {
+      background-color: #9bcea4;
+      color: black;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 2.2em;
+      font-weight: 700;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+
+    .brand {
+      font-size: 0.9em;
+      font-weight: 500;
+      letter-spacing: 1px;
+      opacity: 0.9;
+      margin-bottom: 15px;
+    }
+
+    .tagline {
+      font-size: 0.85em;
+      letter-spacing: 3px;
+      opacity: 0.8;
+      border-top: 1px solid rgba(255,255,255,0.3);
+      padding-top: 15px;
+    }
+
+    .reality-checks {
+      background: #efb7d5;
+      padding: 25px 30px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .reality-checks h2 {
+      font-size: 1.3em;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: black;
+    }
+
+    .check-item {
+      margin-bottom: 15px;
+    }
+
+    .check-label {
+      font-weight: 600;
+      color: black;
+      margin-bottom: 4px;
+    }
+
+    .check-text {
+      font-size: 0.9em;
+      color: #666;
+      font-style: italic;
+    }
+
+    .assessment-section {
+      padding: 25px 30px;
+    }
+
+    .assessment-title {
+      font-size: 1.3em;
+      font-weight: 600;
+      color: black;
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .rating-instruction {
+      text-align: left;
+      font-size: 0.9em;
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    .category {
+      margin-bottom: 35px;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .category-header {
+      background: #efb7d5;
+      color: black;
+      padding: 12px 20px;
+      font-weight: 600;
+      font-size: 1.1em;
+    }
+
+    .category-content {
+      padding: 20px;
+    }
+
+    .question {
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .question:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .question-text {
+      font-size: 0.95em;
+      margin-bottom: 8px;
+      color: #333;
+      line-height: 1.4;
+    }
+
+    .rating-container {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .rating-select {
+      padding: 6px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 0.9em;
+      background: white;
+      cursor: pointer;
+      min-width: 60px;
+    }
+
+    .rating-select:focus {
+      outline: none;
+      border-color: #1a365d;
+      box-shadow: 0 0 0 2px rgba(26, 54, 93, 0.1);
+    }
+
+    .rating-scale {
+      font-size: 0.8em;
+      color: #888;
+      margin-left: 10px;
+    }
+
+    .submit-container {
+      text-align: center;
+      padding: 20px 30px;
+      border-top: 1px solid #e0e0e0;
+      background: #f8f9fa;
+    }
+
+    .submit-btn {
+      background:  #9bcea4;
+      color: black;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(26, 54, 93, 0.3);
+    }
+
+    .results {
+      margin-top: 25px;
+      padding: 25px 30px;
+      background: #f8f9fa;
+      border-top: 1px solid #e0e0e0;
+      display: none;
+    }
+
+    .results.show {
+      display: block;
+    }
+
+    .results h3 {
+      color: #1a365d;
+      margin-bottom: 20px;
+      font-size: 1.2em;
+      text-align: left;
+    }
+
+    .result-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .result-item:last-child {
+      border-bottom: none;
+    }
+
+    .result-category {
+      font-weight: 600;
+      color: #1a365d;
+    }
+
+    .result-score {
+      font-size: 0.9em;
+      color: #666;
+    }
+
+    .result-status {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8em;
+      font-weight: 500;
+    }
+
+    .status-strength {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .status-inconsistent {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .status-critical {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .scoring-guide {
+      margin-top: 20px;
+      padding: 15px;
+      background: white;
+      border-radius: 6px;
+      border: 1px solid #e0e0e0;
+      text-align: center;
+      font-size: 0.85em;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>5 MINUTE DIAGNOSTIC</h1>
+      <div class="brand">T H E &nbsp; P H A R M A  &nbsp; C O A C H</div>
+      <div class="tagline">P U R P O S E &nbsp; • &nbsp; P E O P L E &nbsp; • &nbsp; P R O C E S S</div>
+    </div>
+
+    <div class="reality-checks">
+      <h2>Opening Reality Checks</h2>
+      <div class="check-item">
+        <div class="check-label">Purpose Check:</div>
+        <div class="check-text">"If I spoke to 3 random team members, would they describe our purpose the same way?"</div>
+      </div>
+      <div class="check-item">
+        <div class="check-label">People Check:</div>
+        <div class="check-text">"Are we carrying anyone who everyone privately know isn't adding value?"</div>
+      </div>
+      <div class="check-item">
+        <div class="check-label">Process Check:</div>
+        <div class="check-text">"What procedures do we follow that don't actually help us deliver for patients?"</div>
+      </div>
+    </div>
+
+    <div class="assessment-section">
+      <h2 class="assessment-title">The Assessment</h2>
+      <p class="rating-instruction">Rate your team from 1 (rarely) to 5 (consistently) on each statement.</p>
+
+      <form id="diagnosticForm">
+        <div class="category">
+          <div class="category-header">Purpose</div>
+          <div class="category-content">
+            <div class="question">
+              <div class="question-text">1. Team members clearly explain how their work contributes to patient outcomes</div>
+              <div class="rating-container">
+                <select name="purpose1" class="rating-select">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+                <span class="rating-scale">1 2 3 4 5</span>
+              </div>
+            </div>
+            <div class="question">
+              <div class="question-text">2. Strategic priorities guide decisions even during high-pressure situations</div>
+              <div class="rating-container">
+                <select name="purpose2" class="rating-select">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+                <span class="rating-scale">1 2 3 4 5</span>
+              </div>
+            </div>
+            <div class="question">
+              <div class="question-text">3. People feel genuine emotional connection to the team's mission</div>
+              <div class="rating-container">
+                <select name="purpose3" class="rating-select">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+                <span class="rating-scale">1 2 3 4 5</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="category">
+          <div class="category-header">Process</div>
+          <div class="category-content">
+            <div class="question">
+              <div class="question-text">1. Meetings consistently achieve clear outcomes and next steps</div>
+              <div class="rating-container">
+                <select name="process1" class="rating-select">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+                <span class="rating-scale">1 2 3 4 5</span>
+              </div>
+            </div>
+            <div class="question">
+              <div class="question-text">2. Information flows efficiently to those who need it, when they need it</div>
+              <div class="rating-container">
+                <select name="process2" class="rating-select">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+                <span class="rating-scale">1 2 3 4 5</span>
+              </div>
+            </div>
+            <div class="question">
+              <div class="question-text">3. The team learns and adapts procedures based on experience</div>
+              <div class="rating-container">
+                <select name="process3" class="rating-select">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+                <span class="rating-scale">1 2 3 4 5</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="category">
+          <div class="category-header">People</div>
+          <div class="category-content">
+            <div class="question">
+              <div class="question-text">1. Team members speak up early about issues regardless of hierarchy</div>
+              <div class="rating-container">
+                <select name="people1" class="rating-select">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+                <span class="rating-scale">1 2 3 4 5</span>
+              </div>
+            </div>
+            <div class="question">
+              <div class="question-text">2. People take initiative beyond their formal roles when needed</div>
+              <div class="rating-container">
+                <select name="people2" class="rating-select">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+                <span class="rating-scale">1 2 3 4 5</span>
+              </div>
+            </div>
+            <div class="question">
+              <div class="question-text">3. Cross-functional collaboration happens naturally</div>
+              <div class="rating-container">
+                <select name="people3" class="rating-select">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+                <span class="rating-scale">1 2 3 4 5</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="submit-container">
+          <button type="submit" class="submit-btn">Calculate Results</button>
+        </div>
+      </form>
+
+      <div class="results" id="results">
+        <h3>Your Results</h3>
+        <div id="resultsContent"></div>
+        <div class="scoring-guide">
+          <strong>Scoring Guide:</strong> 9-15: Strength • 6-8: Inconsistent • Below 6: Critical focus needed
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("diagnosticForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const getScore = (prefix) => {
+        return [1, 2, 3].reduce((sum, i) => sum + parseInt(document.querySelector(`[name='${prefix}${i}']`).value), 0);
+      };
+
+      const getStatusClass = (score) => {
+        if (score >= 9) return "status-strength";
+        if (score >= 6) return "status-inconsistent";
+        return "status-critical";
+      };
+
+      const getStatusText = (score) => {
+        if (score >= 9) return "Strength";
+        if (score >= 6) return "Inconsistent";
+        return "Critical focus needed";
+      };
+
+      const purpose = getScore("purpose");
+      const process = getScore("process");
+      const people = getScore("people");
+
+      const resultsHTML = `
+        <div class="result-item">
+          <span class="result-category">Purpose</span>
+          <span class="result-score">Score: ${purpose}</span>
+          <span class="result-status ${getStatusClass(purpose)}">${getStatusText(purpose)}</span>
+        </div>
+        <div class="result-item">
+          <span class="result-category">Process</span>
+          <span class="result-score">Score: ${process}</span>
+          <span class="result-status ${getStatusClass(process)}">${getStatusText(process)}</span>
+        </div>
+        <div class="result-item">
+          <span class="result-category">People</span>
+          <span class="result-score">Score: ${people}</span>
+          <span class="result-status ${getStatusClass(people)}">${getStatusText(people)}</span>
+        </div>
+      `;
+
+      document.getElementById("resultsContent").innerHTML = resultsHTML;
+      document.getElementById("results").classList.add("show");
+      
+      // Smooth scroll to results
+      document.getElementById("results").scrollIntoView({ behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>
