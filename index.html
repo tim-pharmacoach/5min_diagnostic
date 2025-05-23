@@ -33,7 +33,25 @@
       background-color: #9bcea4;
       color: black;
       padding: 30px;
-      text-align: center;
+      text-align: left;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: left;
+      justify-content: left;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .logo {
+      max-height: 80px;
+      width: auto;
+      border-radius: 9px; /* Adjust this value as needed */
+    }
+
+    .text-block {
+      text-align: left;
     }
 
     .header h1 {
@@ -275,9 +293,14 @@
 <body>
   <div class="container">
     <div class="header">
-      <h1>5 MINUTE DIAGNOSTIC</h1>
-      <div class="brand">T H E &nbsp; P H A R M A  &nbsp; C O A C H</div>
-      <div class="tagline">P U R P O S E &nbsp; • &nbsp; P E O P L E &nbsp; • &nbsp; P R O C E S S</div>
+      <div class="header-content">
+        <img src="logo.jpg" alt="Logo" class="logo">
+        <div class="text-block">
+          <h1>5 MINUTE DIAGNOSTIC</h1>
+          <div class="brand">T H E &nbsp; P H A R M A  &nbsp; C O A C H</div>
+          <div class="tagline">P U R P O S E &nbsp; • &nbsp; P E O P L E &nbsp; • &nbsp; P R O C E S S</div>
+        </div>
+      </div>
     </div>
 
     <div class="reality-checks">
