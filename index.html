@@ -298,13 +298,7 @@
         <div class="text-block">
           <h1>5 MINUTE DIAGNOSTIC</h1>
           <div class="brand">T H E &nbsp; P H A R M A  &nbsp; C O A C H</div>
-          <div class="tagline">
-            <span class="tagword">P&nbsp;U&nbsp;R&nbsp;P&nbsp;O&nbsp;S&nbsp;E</span>
-            &nbsp;•&nbsp;
-            <span class="tagword">P&nbsp;E&nbsp;O&nbsp;P&nbsp;L&nbsp;E</span>
-            &nbsp;•&nbsp;
-            <span class="tagword">P&nbsp;R&nbsp;O&nbsp;C&nbsp;E&nbsp;S&nbsp;S</span>
-          </div>
+          <div class="tagline">P U R P O S E &nbsp; • &nbsp; P E O P L E &nbsp; • &nbsp; P R O C E S S</div>
         </div>
       </div>
     </div>
@@ -314,14 +308,35 @@
       <div class="check-item">
         <div class="check-label">Purpose Check:</div>
         <div class="check-text">"If I spoke to 3 random team members, would they describe our purpose the same way?"</div>
+        <select id="purposeCheck" class="rating-select">
+          <option value="">Select</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+        <div id="purposeCheckMessage" class="result-status status-critical" style="display:none; margin-top: 8px;">Focus needed</div>
       </div>
+
       <div class="check-item">
         <div class="check-label">People Check:</div>
-        <div class="check-text">"Are we carrying anyone who everyone privately know isn't adding value?"</div>
+        <div class="check-text">"Are we carrying anyone who everyone privately knows isn't adding value?"</div>
+        <select id="peopleCheck" class="rating-select">
+          <option value="">Select</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+          <option value="probably">Probably</option>
+        </select>
+        <div id="peopleCheckMessage" class="result-status status-critical" style="display:none; margin-top: 8px;">Focus needed</div>
       </div>
+
       <div class="check-item">
         <div class="check-label">Process Check:</div>
-        <div class="check-text">"What procedures do we follow that don't actually help us deliver for patients?"</div>
+        <div class="check-text">"Are there procedures that we follow that don't actually help us deliver for patients?"</div>
+        <select id="processCheck" class="rating-select">
+          <option value="">Select</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+        <div id="processCheckMessage" class="result-status status-critical" style="display:none; margin-top: 8px;">Focus needed</div>
       </div>
     </div>
 
@@ -503,8 +518,26 @@
       const purpose = getScore("purpose");
       const process = getScore("process");
       const people = getScore("people");
+      const purposeCheck = document.getElementById("purposeCheck").value;
+      const processCheck = document.getElementById("processCheck").value;
+      const peopleCheck = document.getElementById("peopleCheck").value;
 
-      const resultsHTML = `
+      let focusNeededChecks = [];
+      if (purposeCheck === "no") focusNeededChecks.push("Purpose");
+      if (peopleCheck === "yes" || peopleCheck === "probably") focusNeededChecks.push("People"); // Example — customize as needed
+      if (processCheck === "yes") focusNeededChecks.push("Process");   // Example — customize as needed
+
+      let focusSummary = '';
+      if (focusNeededChecks.length > 0) {
+        focusSummary = `
+          <div style="margin-bottom: 20px; padding: 12px; background: #f8d7da; color: #721c24; border-radius: 6px; border: 1px solid #f5c6cb;">
+            <strong>Opening Reality Check Focus Areas:</strong><br />
+            ${focusNeededChecks.join(', ')}
+          </div>
+        `;
+      }
+      
+      const resultsHTML = focusSummary + `
         <div class="result-item">
           <span class="result-category">Purpose</span>
           <span class="result-score">Score: ${purpose}</span>
@@ -522,12 +555,56 @@
         </div>
       `;
 
+      
+
       document.getElementById("resultsContent").innerHTML = resultsHTML;
       document.getElementById("results").classList.add("show");
       
       // Smooth scroll to results
       document.getElementById("results").scrollIntoView({ behavior: 'smooth' });
     });
+
+    window.addEventListener("DOMContentLoaded", () => {
+    const purposeSelect = document.getElementById("purposeCheck");
+    const purposeMessage = document.getElementById("purposeCheckMessage");
+
+    const peopleSelect = document.getElementById("peopleCheck");
+    const peopleMessage = document.getElementById("peopleCheckMessage");
+
+    const processSelect = document.getElementById("processCheck");
+    const processMessage = document.getElementById("processCheckMessage");
+
+    // Example: show message if 'no' is selected for purpose
+    purposeSelect.addEventListener("change", () => {
+      if (purposeSelect.value === "no") {
+        purposeMessage.style.display = "inline-block";
+      } else {
+        purposeMessage.style.display = "none";
+      }
+    });
+
+    // Example: show message if 'yes' is selected for people
+    peopleSelect.addEventListener("change", () => {
+      if (peopleSelect.value === "yes") {
+        peopleMessage.style.display = "inline-block";
+      } else if (peopleSelect.value === "probably") {
+        peopleMessage.style.display = "inline-block";
+      } else {
+        peopleMessage.style.display = "none";
+      }
+    });
+
+    // Example: show message only if user hasn’t made a selection for process
+    processSelect.addEventListener("change", () => {
+      if (processSelect.value === "yes") {
+        processMessage.style.display = "inline-block";
+      } else {
+        processMessage.style.display = "none";
+      }
+    });
+  });
+
+  window.addEventListener("DOMContentLoaded", addCheckListeners);
   </script>
 </body>
 </html>
