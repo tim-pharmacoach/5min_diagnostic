@@ -288,7 +288,19 @@
       font-size: 0.85em;
       color: #666;
     }
+
+    .form-align {
+      padding-left: 0px;
+      padding-right: 30px;
+    }
+
+    .opening-copy {
+      background: white;
+      padding: 25px 30px;
+      border-bottom: 1px solid #e0e0e0;
+    }
   </style>
+
 </head>
 <body>
   <div class="container">
@@ -301,6 +313,13 @@
           <div class="tagline">P U R P O S E &nbsp; • &nbsp; P E O P L E &nbsp; • &nbsp; P R O C E S S</div>
         </div>
       </div>
+    </div>
+
+    <div class="opening-copy">
+      <p style="margin-bottom: 20px; text-align: left; font-size: 0.95em; color: #333;">
+            <strong>We’ve used this diagnostic with over 40 pharma teams and 7 out of 10 discovered they were fixing the wrong thing. <br><br>
+            In 5 minutes, you’ll know where your real bottleneck is; and how the top teams address it.
+            </strong></p>
     </div>
 
     <div class="reality-checks">
@@ -491,7 +510,73 @@
         <div class="scoring-guide">
           <strong>Scoring Guide:</strong> 9-15: Strength • 6-8: Inconsistent • Below 6: Critical focus needed
         </div>
-      </div>
+
+        <!-- Contact Form for Custom Breakdown -->
+        <div class="submit-container form-align" style="margin-top: 30px; text-align: left;">
+          <form action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="e037549b-20c8-46c3-bb4b-06c82277e7e6">
+
+           <p style="margin-bottom: 20px; text-align: left; font-size: 0.95em; color: #333;">
+            <strong>Just completed the diagnostic? Here’s what happens next.</strong> <br><br>
+              Most pharma leaders take the results… and do nothing. <br><br>
+              They file them away. Get pulled into the next fire. Six months later, the same performance issues are still there. <br><br>
+              The leaders who actually move the needle? They act. <br><br>
+              If you want <strong>personalised insight on your results</strong>, plus real examples of how other pharma teams used the exact same findings to unlock <strong>40%+ performance gains in 90 days</strong>. I’ll send you a custom breakdown.
+          </p>
+
+            <div style="display: flex; align-items: center; margin-bottom: 15px;">
+              <label for="name" style="width: 120px;">Name:</label>
+              <input type="text" name="name" id="name" required style="flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+            </div>
+
+            <div style="display: flex; align-items: center; margin-bottom: 15px;">
+              <label for="email" style="width: 120px;">Email:</label>
+              <input type="email" name="email" id="email" required style="flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+            </div>
+
+            <div style="margin-bottom: 10px;">
+              <label>
+                <input type="checkbox" name="custom_breakdown" value="yes" required>
+                Send my custom breakdown.
+              </label>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+              <label>
+                <input type="checkbox" name="weekly_advice" value="yes">
+                Click here to receive high value weekly pharma leadership advice to your email every Friday.
+              </label>
+            </div>
+
+            <!-- Hidden fields to hold diagnostic data -->
+            <input type="hidden" name="score_purpose" id="score_purpose">
+            <input type="hidden" name="score_process" id="score_process">
+            <input type="hidden" name="score_people" id="score_people">
+
+            <!-- Optional: Capture reality check answers -->
+            <input type="hidden" name="check_purpose" id="check_purpose">
+            <input type="hidden" name="check_process" id="check_process">
+            <input type="hidden" name="check_people" id="check_people">
+
+            <!-- Optional: Capture all individual question responses -->
+            <input type="hidden" name="purpose1_response" id="purpose1_response">
+            <input type="hidden" name="purpose2_response" id="purpose2_response">
+            <input type="hidden" name="purpose3_response" id="purpose3_response">
+            <input type="hidden" name="process1_response" id="process1_response">
+            <input type="hidden" name="process2_response" id="process2_response">
+            <input type="hidden" name="process3_response" id="process3_response">
+            <input type="hidden" name="people1_response" id="people1_response">
+            <input type="hidden" name="people2_response" id="people2_response">
+            <input type="hidden" name="people3_response" id="people3_response">
+
+
+            <button type="submit" class="submit-btn">Submit</button>
+          </form>
+        </div>
+
+
+      
+
     </div>
   </div>
 
@@ -562,6 +647,21 @@
       
       // Smooth scroll to results
       document.getElementById("results").scrollIntoView({ behavior: 'smooth' });
+
+      // Fill hidden fields for contact form
+      document.getElementById("score_purpose").value = purpose;
+      document.getElementById("score_process").value = process;
+      document.getElementById("score_people").value = people;
+
+      document.getElementById("check_purpose").value = purposeCheck;
+      document.getElementById("check_process").value = processCheck;
+      document.getElementById("check_people").value = peopleCheck;
+
+      for (let i = 1; i <= 3; i++) {
+        document.getElementById(`purpose${i}_response`).value = document.querySelector(`[name='purpose${i}']`).value;
+        document.getElementById(`process${i}_response`).value = document.querySelector(`[name='process${i}']`).value;
+        document.getElementById(`people${i}_response`).value = document.querySelector(`[name='people${i}']`).value;
+      }
     });
 
     window.addEventListener("DOMContentLoaded", () => {
